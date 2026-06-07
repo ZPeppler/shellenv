@@ -29,8 +29,8 @@
             stateVersion = "26.05";
           };
 
-          modules = [ ./shellenv/ ];
-         }).activationPackage;
+          modules = [ ./shellenv ];
+        }).activationPackage;
     };
 }
 
