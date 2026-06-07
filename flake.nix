@@ -23,8 +23,6 @@
           homeDirectory = builtins.getEnv "HOME";
         };
 
-        home.stateVersion = "26.05";
-
         modules = [ ./shellenv ];
       };
     };
