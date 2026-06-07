@@ -1,36 +1,21 @@
 {
+  inputs = {
+    nixpkgs.url = "github:nixos/nixpkgs/nixos-unstable";
+    home-manager.url = "github:nix-community/home-manager";
+  };
   outputs =
     {
       self,
       nixpkgs,
+      home-manager,
       ...
     }:
     let
-      systems = [ "x86_64-linux" ];
+      system = "x86_64-linux";
+      pkgs = import nixpkgs { inherit system; };
     in
     {
-      packages = builtins.listToAttrs (
-        map (
-          system:
-          let
-            pkgs = import nixpkgs { inherit system; };
-          in
-          {
-            name = system;
-            value = rec {
-              shellenv = pkgs.buildEnv {
-                name = "shellenv";
-
-                paths = [
-                  pkgs.zsh
-                ];
-              };
-
-              default = shellenv;
-            };
-          }
-        ) systems
-      );
+      homeModules.default = import ./shellenv/dynamic.nix { inherit pkgs; };
     };
 }
 
