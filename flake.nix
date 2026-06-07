@@ -17,12 +17,6 @@
     {
       homeConfigurations.default = home-manager.lib.homeManagerConfiguration {
         inherit pkgs;
-
-        extraSpecialArgs = {
-          username = builtins.getEnv "USER";
-          homeDirectory = builtins.getEnv "HOME";
-        };
-
         modules = [ ./shellenv ];
       };
     };
