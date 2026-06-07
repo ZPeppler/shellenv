@@ -21,8 +21,9 @@
         extraSpecialArgs = {
           username = builtins.getEnv "USER";
           homeDirectory = builtins.getEnv "HOME";
-          stateVersion = "26.05";
         };
+
+        home.stateVersion = "26.05";
 
         modules = [ ./shellenv ];
       };
