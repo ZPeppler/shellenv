@@ -15,7 +15,12 @@
       pkgs = import nixpkgs { inherit system; };
     in
     {
-      homeModules.default = import ./shellenv/dynamic.nix { inherit pkgs; };
+      homeModules.default = { pkgs, ... }: {
+        imports = [ ./shellenv ];
+        home.username = builtins.getEnv "USER";
+        home.homeDirectory = builtins.getEnv "HOME";
+        home.stateVersion = "26.05";
+      };
     };
 }
 
