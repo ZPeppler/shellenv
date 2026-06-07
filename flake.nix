@@ -15,12 +15,22 @@
       pkgs = import nixpkgs { inherit system; };
     in
     {
-      homeModules.default = { pkgs, ... }: {
-        imports = [ ./shellenv ];
-        home.username = builtins.getEnv "USER";
-        home.homeDirectory = builtins.getEnv "HOME";
-        home.stateVersion = "26.05";
-      };
+      packages.${system}.default =
+        let
+          user = builtins.getEnv "USER";
+          home = builtins.getEnv "HOME";
+        in
+        (home-manager.lib.homeManagerConfiguration {
+          inherit pkgs;
+
+          extraSpecialArgs = {
+            username = user;
+            homeDirectory = home;
+            stateVersion = "26.05";
+          };
+
+          modules = [ ./shellenv/ ];
+         }).activationPackage;
     };
 }
 
